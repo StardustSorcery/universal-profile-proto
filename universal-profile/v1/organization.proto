@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package dev.ggtk.universal_profile.v1;
+
+import "google/protobuf/empty.proto";
+
+service OrganizationService {
+    rpc Create(CreateOrganizationRequest) returns (CreateOrganizationResponse);
+    rpc Get(GetOrganizationRequest) returns (GetOrganizationResponse);
+    rpc List(ListOrganizationRequest) returns (ListOrganizationResponse);
+    rpc Update(UpdateOrganizationRequest) returns (UpdateOrganizationResponse);
+    rpc Delete(DeleteOrganizationRequest) returns (google.protobuf.Empty);
+}
+
+//Data Model
+message OrganizationLocale {
+    string display_name = 1;
+}
+
+message OrganizationRelation {
+    Organization organization = 1;
+    string role = 2;
+}
+
+message Organization {
+    string id = 1;
+    string type = 2;
+    string default_locale = 3;
+    map<string, OrganizationLocale> locales = 4;
+    repeated Organization children = 5;
+}
+
+// Create req/res
+message CreateOrganizationRequest {
+    string defaultLocale = 1;
+    map<string, OrganizationLocale> locales = 2;
+}
+
+message CreateOrganizationResponse {
+    Organization item = 1;
+}
+
+// Get req/res
+message GetOrganizationRequest {
+    string id = 1;
+}
+
+message GetOrganizationResponse {
+    Organization item = 1;
+}
+
+// List req/res
+message ListOrganizationRequest {
+    optional string display_name = 1;
+    optional string locale = 2;
+}
+
+message ListOrganizationResponse {
+    repeated Organization items = 1;
+}
+
+// Update req/res
+message UpdateOrganizationRequest {
+    string id = 1;
+    string default_locale = 2;
+    map<string, OrganizationLocale> locales = 3;
+}
+
+message UpdateOrganizationResponse {
+    Organization item = 1;
+}
+
+// Delete /req/res
+message DeleteOrganizationRequest {
+    string id = 1;
+}

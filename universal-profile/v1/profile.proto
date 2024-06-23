@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package dev.ggtk.universal_profile.v1;
+
+import "google/protobuf/empty.proto";
+import "organization.proto";
+
+service ProfileService {
+    rpc Create(CreateProfileRequest) returns (CreateProfileResponse);
+    rpc Get(GetProfileRequest) returns (GetProfileResponse);
+    rpc List(ListProfileRequest) returns (ListProfileResponse);
+    rpc Update(UpdateProfileRequest) returns (UpdateProfileResponse);
+    rpc Delete(DeleteProfileRequest) returns (google.protobuf.Empty);
+}
+
+// Data Model
+message ProfileLocale {
+    string display_name = 1;
+}
+
+message Profile {
+    string id = 1;
+    string default_locale = 2;
+    map<string, ProfileLocale> locales = 3;
+    repeated OrganizationRelation organizations = 4;
+}
+
+// Create req/res
+message CreateProfileRequest {
+    string default_locale = 1;
+    map<string, ProfileLocale> locales = 2;
+}
+
+message CreateProfileResponse {
+    Profile item = 1;
+}
+
+// Get req/res
+message GetProfileRequest {
+    string id = 1;
+}
+
+message GetProfileResponse {
+    Profile item = 1;
+}
+
+// List req/res
+message ListProfileRequest {
+    optional string display_name = 1;
+    optional string locale = 2;
+}
+
+message ListProfileResponse {
+    repeated Profile items = 1;
+}
+
+// Update req/res
+message UpdateProfileRequest {
+    string id = 1;
+    string default_locale = 2;
+    map<string, ProfileLocale> locales = 3;
+}
+
+message UpdateProfileResponse {
+    Profile item = 1;
+}
+
+// Delete /req/res
+message DeleteProfileRequest {
+    string id = 1;
+}

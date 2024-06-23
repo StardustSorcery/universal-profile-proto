@@ -1,0 +1,20 @@
+{
+  "name": "universal-profile-proto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:v1": "mkdir -p ./dist/nodejs && grpc_tools_node_protoc -I ./universal-profile/v1 --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:./dist/nodejs --grpc_out=grpc_js:./dist/nodejs --ts_out=service=grpc-node,mode=grpc-js:./dist/nodejs ./universal-profile/v1/*.proto",
+    "build": "npm run build:v1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@grpc/grpc-js": "^1.10.9",
+    "google-protobuf": "^3.21.2",
+    "grpc-tools": "^1.12.4",
+    "ts-protoc-gen": "^0.15.0"
+  }
+}
